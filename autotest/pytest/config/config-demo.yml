@@ -1,0 +1,11 @@
+default:
+  username: 'default_user'
+  password: 'default_pass'
+
+staging:
+  username: 'staging_user'
+  password: 'staging_pass'
+
+production:
+  username: 'prod_user'
+  password: 'prod_pass'

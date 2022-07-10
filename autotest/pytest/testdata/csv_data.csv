@@ -1,0 +1,11 @@
+url,body,expect
+http://localhost:9999/demo/add,"{
+ ""id"":""1"",
+ ""username"": ""zyx123"",
+ ""password"": ""123456""
+}",true
+http://localhost:9999/demo/update,"{
+ ""id"":""2"",
+ ""username"": ""zyx456"",
+ ""password"": ""123456""
+}",true

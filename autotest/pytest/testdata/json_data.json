@@ -1,0 +1,31 @@
+{
+  "item":
+  [
+    {
+      "request":
+      {
+        "url": "http://localhost:9999/demo/add",
+        "body":
+        {
+          "id":"4",
+          "username": "zyx666",
+          "password": "123456"
+        }
+      },
+      "response":"true"
+    },
+    {
+      "request":
+      {
+        "url": "http://localhost:9999/demo/update",
+        "body":
+        {
+          "id":"4",
+          "username": "zyx666666",
+          "password": "123456"
+        }
+      },
+      "response":"true"
+    }
+  ]
+}
