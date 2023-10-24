@@ -13,7 +13,7 @@ import re
 
 def demo():
     # file_path = '/Users/menghuawei/IdeaProjects/my-project/wei-notebook'
-    file_path = '/Users/menghuawei/PycharmProjects/Learn-Python'
+    file_path = '/'
 
     for root, dirs, files in os.walk(file_path):
         for _file_path in files:

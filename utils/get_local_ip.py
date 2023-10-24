@@ -4,7 +4,7 @@
 """
 @author       weimenghua
 @time         2023/6/19 15:45
-@description  查询本机ip地址
+@description  查询本机 ip 地址
 """
 
 import socket

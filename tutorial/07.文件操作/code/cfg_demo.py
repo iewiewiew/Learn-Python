@@ -12,8 +12,10 @@ import os
 from os.path import dirname
 
 
-def cfg_demo():
-    cfgpath = os.path.dirname(dirname(os.path.realpath(__file__))) + "\\testdata\\cfgdemo.ini"
+def read_cfg():
+    cfgpath = os.path.dirname(dirname(os.path.realpath(__file__))) + "/files/cfgdemo.ini"
+
+    print(cfgpath)
 
     # 创建管理对象
     conf = configparser.ConfigParser()
@@ -32,5 +34,23 @@ def cfg_demo():
     print(items)  # list 里面对象是元祖
 
 
+def write_cfg():
+    config = configparser.ConfigParser()
+
+    config["redis"] = {
+        "host": "127.0.0.1",
+        "port": "6379"
+    }
+
+    config["exec"] = {}
+    config["exec"]["debug"] = "False"
+    config["exec"]["node"] = "10"
+
+    cfgpath = os.path.dirname(dirname(os.path.realpath(__file__))) + "/files/cfgdemo2.ini"
+    with open(cfgpath, "w+") as f:
+        config.write(f)
+
+
 if __name__ == '__main__':
-    cfg_demo()
+    # read_cfg()
+    write_cfg()

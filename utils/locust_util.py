@@ -9,14 +9,13 @@
 
 from locust import HttpUser, task
 
-
 """
 执行脚本：locust -f python_locust.py
 访问地址：http://127.0.0.1:8089/
 """
 
-class LocustTest(HttpUser):
 
+class LocustTest(HttpUser):
     host = "http://www.baidu.com"  # host
 
     def on_start(self):

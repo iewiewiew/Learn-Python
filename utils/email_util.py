@@ -4,7 +4,7 @@
 """
 @author       weimenghua
 @time         2022/7/10 14:03
-@description  检测服务进程是否存在
+@description  发送邮件
 """
 
 import smtplib
@@ -49,7 +49,7 @@ def send_complex_email():
     # 发送者邮箱地址
     senderMail = '1425615649@qq.com'
     # 发送者 QQ 邮箱授权码
-    authCode = 'testervqgaxvcgzaieib'
+    authCode = 'test_ervqgaxvcgzaieib'
     # 接收者邮箱地址
     receiverMail = '1425615649@qq.com'
 

@@ -4,13 +4,16 @@
 """
 @author       weimenghua
 @time         2022/8/1 08:57
-@description  unicode and base64 and urllib
+@description  unicode/base64/urllib
 """
+
 import json
 import base64
 
 
 def unicode_demo():
+    """unicode 编码"""
+
     str1 = b"\u53ea\u5141\u8bb8\u5728\u5206\u652f\u4e0a\u521b\u5efa\u6216\u66f4\u65b0\u6587\u4ef6"
     print(str1.decode("unicode_escape"))  # 使用unicode_escape 解码
 
@@ -22,6 +25,8 @@ def unicode_demo():
 
 
 def base64_demo():
+    """base64 编码"""
+
     # 文本字符串进行 Base64 编码
     text = "更新 blog 123"
     encoded_bytes = base64.b64encode(text.encode("utf-8"))
@@ -35,6 +40,8 @@ def base64_demo():
 
 
 def url_demo():
+    """url 编码"""
+
     from urllib.parse import quote, quote_plus, unquote, unquote_plus
 
     # URL 编码
@@ -57,6 +64,6 @@ def url_demo():
 
 
 if __name__ == '__main__':
-    unicode_demo()
+    # unicode_demo()
     base64_demo()
     # url_demo()

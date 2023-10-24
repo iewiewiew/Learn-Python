@@ -32,7 +32,7 @@ class RequestRecorder:
 
     def done(self):
         # 保存记录到 CSV 文件
-        with open("/Users/menghuawei/PycharmProjects/Learn-Python/.tmp/gitee/api_requests.csv", "w", newline="", encoding="utf-8") as csvfile:
+        with open("/Users/menghuawei/PycharmProjects/Learn-Python/.gitee/testdata/api_requests.csv", "w", newline="", encoding="utf-8") as csvfile:
             fieldnames = ["URL", "Method", "Headers", "Params", "Response"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()

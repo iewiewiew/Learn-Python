@@ -69,10 +69,10 @@ if __name__ == '__main__':
     """执行查询语句"""
     # query = "SELECT * FROM dbname.`t_table_info`"
     # query = "SHOW DATABASES"
-    query = "SHOW TABLES"
+    # query = "SHOW TABLES"
     # query = "SHOW BINARY LOGS;"
     # query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'oauth_applications'"
-    # query = "select * from gitlabhq_production.oauth_applications where id in (888, 1281, 1286)"
+    query = "select * from dbname.t_table_info"
     db.execute_query(query)
 
     """执行更新语句"""

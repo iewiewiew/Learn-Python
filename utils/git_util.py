@@ -34,11 +34,17 @@ class GitUtil:
     def git_push(repo_url, target_path):
         """推送代码"""
         repo = git.Repo(target_path)
-        for i in range(1, 3):
-            with open(repo.working_dir + '/README.md', 'w') as f:
+        # 切换新分支，不用时需注释
+        # new_branch = repo.create_head('new_branch')
+        # repo.head.reference = new_branch
+        repo.head.reset(index=True, working_tree=True)
+
+        for i in range(1, 5):
+            with open(repo.working_dir + '/README.md', 'w') as f:  # w / a
                 f.write('Hello Git ' + time + '\n')
             repo.index.add(['README.md'])
             repo.index.commit('第 ' + str(i) + ' 次 Hello Git ' + time)
+        # repo.index.commit('第 ' + str(i) + ' 次 Hello Git ' + time)
         repo.remote('origin').push()
         print('仓库路径: ', repo_url)
 
@@ -46,8 +52,8 @@ class GitUtil:
     def git_create_branch(repo_url, target_path):
         """创建分支"""
         repo = git.Repo(target_path)
-        for i in range(1, 6):
-            new_branch = 'test_pr_' + str(i) + '_' + time
+        for i in range(1, 10):
+            new_branch = 'branch_' + str(i) + '_' + time
             repo.create_head(new_branch)
             # 切换到新分支
             repo.head.reference = new_branch
@@ -70,18 +76,10 @@ class GitUtil:
 
     @staticmethod
     def delete_branch(repo_url, target_path):
-        """
-        远程分支: ['origin/HEAD', 'origin/master', 'origin/test_pr_1_20230918100858', 'origin/test_pr_1_20230918100911',
-               'origin/test_pr_1_20230918101055', 'origin/test_pr_1_20230918101324', 'origin/test_pr_2_20230918100858',
-               'origin/test_pr_2_20230918100911', 'origin/test_pr_3_20230918100858', 'origin/test_pr_3_20230918100911',
-               'origin/test_pr_4_20230918100858', 'origin/test_pr_4_20230918100911']
-        """
-
         """删除分支"""
         repo = git.Repo(target_path)
         # 创建新分支并推送到远程仓库
-        # branch_name = 'remote_branch_to_delete'
-        branch_name = 'test_pr_2_20230918100911'
+        branch_name = 'remote_branch_to_delete'
         new_branch = repo.create_head(branch_name)
         new_branch.commit = repo.head.commit
         repo.remotes.origin.push(new_branch)
@@ -97,10 +95,10 @@ class GitUtil:
     def git_create_tag(repo_url, target_path):
         """创建标签"""
         repo = git.Repo(target_path)
-        for i in range(1, 10):
+        for i in range(101, 120):
             tag = repo.create_tag('tag_' + str(i) + '_' + time, message='test push tag')
             repo.remote('origin').push(tag)
-        # repo.remotes.origin.push('--tags')
+        # repo.remotes.origin.push('--tags')  # @todo：推送所有标签未成功
         print('仓库路径: ', repo_url)
 
     @staticmethod
@@ -170,7 +168,7 @@ class GitUtil:
         for extension in extensions:
             repo.git.execute(['git', 'lfs', 'track', '*' + extension])
 
-        for i in range(1, 10):
+        for i in range(1, 5):
             docx_ops(target_path + '/lfs00{}.docx'.format(i))
             repo.git.add('.')  # add 所有
             repo.index.add(['lfs00{}.docx'.format(i)])  # 单独 add 某个文件
@@ -179,23 +177,21 @@ class GitUtil:
         repo.remote('origin').push(force=True)
         print('仓库路径: ', repo_url)
 
-    @staticmethod
-    def create_pr_file(repo_url, target_path):
-        """创建 PR 未成功"""
-        repo = git.Repo(target_path)
 
     @staticmethod
     def push_big_file(repo_url, target_path):
         """推送大文件"""
         repo = git.Repo(target_path)
         # file_size = 1024 * 1024 * 100  # 文件大小为 100 MB
-        file_size = 1024 * 1024 * 1  # 文件大小为 1 MB
+        # file_size = 1024 * 1024 * 1  # 文件大小为 1 MB
+        file_size = 1 * 1 * 1
         if not os.path.isdir(target_path + '/testfile'):
             os.mkdir(target_path + '/testfile')
         for i in range(1, 5):
             create_large_binary_file(target_path + '/testfile/large_file_{}.bin'.format(i), file_size)
-        repo.git.add('.')  # add 所有
-        repo.index.commit('Hello Git ' + time)
+            # create_large_binary_file(target_path + '/large_file_{}.bin'.format(i), file_size)
+            repo.git.add('.')  # add 所有
+            repo.index.commit('Hello Git ' + time)
         repo.remote('origin').push(force=True)
         print('仓库路径: ', repo_url)
 
@@ -239,13 +235,12 @@ class GitUtil:
 if __name__ == '__main__':
     time = datetime.now().strftime("%Y%m%d%H%M%S")
 
-    # CI 环境
     # repo_url = 'https://username:password@gitee/testent001/wei-demo-001.git'
     # target_path = '/Users/menghuawei/PycharmProjects/Learn-Python/.tmp/gitee/repo/wei-demo-001'
 
     """克隆仓库"""
     # GitUtil.git_clone(repo_url=repo_url, target_path=target_path)
-    """推送更新分支"""
+    """推送代码"""
     # GitUtil.git_push(repo_url=repo_url, target_path=target_path)
     """推送新分支"""
     # GitUtil.git_create_branch(repo_url=repo_url, target_path=target_path)

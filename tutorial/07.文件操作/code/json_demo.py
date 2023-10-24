@@ -10,7 +10,7 @@
 import re
 import json
 import jsonpath
-from utils import get_file_path
+from utils.path_util import get_file_path
 
 
 def write_json():
@@ -33,19 +33,24 @@ def read_json():
 
 
 def jsonpath_demo():
-    fliePath = get_file_path() + 'jsonpath.json'
-    file = json.load(open(fliePath, 'r', encoding="utf-8"))
-    print(file)
+    filePath = '/Users/menghuawei/PycharmProjects/Learn-Python/.tmp/tmp.json'
 
-    author = jsonpath.jsonpath(file, '$.store.book[*].author')
-    print(author)
+    # fliePath = get_file_path() + 'jsonpath.json'
+    file = json.load(open(filePath, 'r', encoding="utf-8"))
+    # print(file)
 
-    author2 = jsonpath.jsonpath(file, '$..author')
-    print(author2)
+    # author = jsonpath.jsonpath(file, '$.store.book[*].author')
+    # print(author)
+
+    # author2 = jsonpath.jsonpath(file, '$..author')
+    # print(author2)
 
     # str = json.dumps(file)
-    str = re.findall(r'\"store\":\".*?\"', file)
-    print(str)
+    # str = re.findall(r'\"store\":\".*?\"', file)
+    # print(str)
+
+    groups_id = jsonpath.jsonpath(file, '$.groups.[*].id')
+    print(groups_id)
 
 
 if __name__ == '__main__':

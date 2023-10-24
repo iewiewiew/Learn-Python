@@ -14,8 +14,6 @@ import ssl
 from datetime import datetime
 from urllib.parse import urlencode
 
-from utils.decorator_all import method_decorator
-
 
 class HttpClient:
     def __init__(self, host):
@@ -26,8 +24,9 @@ class HttpClient:
 
         self.host = host
         self.cookie = None
-        self.conn = http.client.HTTPSConnection(self.host, context=context)
-        # self.conn = http.client.HTTPSConnection(self.host)
+        # self.conn = http.client.HTTPSConnection(self.host, context=context)
+        # 指定 TLS 1.2 版本，如遇报错则注释该行
+        self.conn = http.client.HTTPSConnection(self.host, context=ssl.SSLContext(ssl.PROTOCOL_TLSv1_2))
 
     def send_get_request(self, path):
         """Get 请求"""
@@ -55,7 +54,7 @@ class HttpClient:
         self.conn.close()
         return response_data, method_name
 
-    @method_decorator
+    # @method_decorator
     def send_put_request(self, path, body, headers=None):
         """PUT 请求"""
         method_name = inspect.currentframe().f_code.co_name
@@ -105,12 +104,11 @@ if __name__ == '__main__':
     2、请求体是 form，注释 json 和 dict 转换的代码
     """
 
-    # CI 环境
-    # client = HttpClient("www.demo.com")
+    client = HttpClient("127.0.0.1:5000")
 
     time = datetime.now().strftime("%Y%m%d%H%M%S")
 
-    # 发送 GET 请求
+    """发送 GET 请求"""
     # 获取 README
     # path = "/path/wei-demo-012/readme?access_token=15519cacadfc79c03a56f63892ca6840"
     # 获取 blob
@@ -121,30 +119,25 @@ if __name__ == '__main__':
     # client.save_response_data(response_data, method_name)
     # print(response_data)
 
-    # 发送 POST 请求
-    # path = "/path/wei-demo-012/blob/testfile/test_{}.txt".format(time)
+    """发送 POST 请求"""
+    path = "/mock"
     body = '''{
-        "access_token": "15519cacadfc79c03a56f63892ca6840",
-        "owner": "testent001",
-        "repo": "wei-demo-012",
-        "content": "api 测试",
-        "encoding": "text",
-        "message": "api 创建",
-        "author[name]": "git123",
-        "author[eamil]": "git123@qq.com"
+            "name": "name",
+            "address": "address",
+            "email": "email"
     }'''
 
-    data_dict = json.loads(body)
+    # data_dict = json.loads(body)
     # data_dict["message"] = "api 创建 {}".format(time)
     # body = json.dumps(data_dict, indent=4)
 
     headers = {"Content-Type": "application/json"}
     # headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    # response_data, method_name = client.send_post_request(path, body, headers)
+    response_data, method_name = client.send_post_request(path, body, headers)
     # client.save_response_data(response_data, method_name)
-    # print(response_data)
+    print(response_data)
 
-    # 发送 PUT 请求
+    """发送 PUT 请求"""
     path = "/path/wei-demo-012/blob/testfile/test_20230922151044.txt"
     body = {
         "access_token": "15519cacadfc79c03a56f63892ca6840",
@@ -164,7 +157,7 @@ if __name__ == '__main__':
     # client.save_response_data(response_data, method_name)
     # print(response_data)
 
-    # 发送 DELETE 请求
+    """发送 DELETE 请求"""
     path = "api/v1/repos/testent001/wei-demo-012/blob/tmp.txt?access_token=15519cacadfc79c03a56f63892ca6840&message=%E5%88%A0%E9%99%A4blob"
     # response_data, method_name = client.send_delete_request(path)
     # client.save_response_data(response_data, method_name)

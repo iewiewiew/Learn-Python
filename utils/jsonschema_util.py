@@ -25,7 +25,8 @@ def demo():
         }
     }
     r = requests.post("https://httpbin.ceshiren.com/post")
-    validate(instance=r.json(), schema=schema)
+    resp = validate(instance=r.json(), schema=schema)
+    print(resp)
 
 
 if __name__ == '__main__':

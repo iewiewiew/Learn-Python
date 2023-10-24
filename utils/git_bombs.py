@@ -64,4 +64,4 @@ if __name__ == '__main__':
 
     # update master ref
     # open('.git/refs/heads/master', 'wb').write(commit_hash)
-    open('../files/git_bombs/.git/refs/heads/master', 'wb').write(commit_hash)
+    open('/Users/menghuawei/PycharmProjects/Learn-Python/.gitee/repo/wei-demo-021/.git/refs/heads/master', 'wb').write(commit_hash)

@@ -4,7 +4,7 @@
 """
 @author       weimenghua
 @time         2023/10/8 11:32
-@description
+@description  下载文件 注：能下载但是无法打开
 """
 
 import requests
@@ -39,8 +39,9 @@ def download_file2(url, save_path):
 
 if __name__ == '__main__':
     # url = 'http://gitee.com/api/v5/repos/hightest/wei-demo-001/tarball?access_token=99d49b62b4f51c39b4bd65be3f22d52f'  # 文件的 URL
-    save_path = '../.tmp/gitee/repo/master.zip'  # 要保存的文件路径
-    # save_path = '../.tmp/gitee/repo/master.tar.gz'  # 要保存的文件路径
+    # save_path = '../.gitee/repo/master.zip'  # 要保存的文件路径
+
+    save_path = '../.gitee/repo/master.tar.gz'  # 要保存的文件路径
     url = "https://api.gitee.com/enterprises/2095951/projects/29714570/repository/download"  # 替换为实际的下载链接
 
     # download_file(url, save_path)

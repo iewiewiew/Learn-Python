@@ -37,6 +37,15 @@ def upload(filename):
     print(f'{filename}上传完成.')
 
 
+def method_decorator(func):
+    def wrapper(*args, **kwargs):
+        method_name = func.__name__
+        print("方法名:", method_name)
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
 if __name__ == '__main__':
     download('MySQL 从删库到跑路.avi')
     upload('Python 从入门到住院.pdf')
