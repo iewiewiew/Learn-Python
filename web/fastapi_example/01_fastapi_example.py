@@ -4,7 +4,7 @@
 """
 @author       weimenghua
 @time         2023/10/25 10:11
-@description  FastAPI
+@description  FastAPI 例子
 """
 
 import uvicorn
@@ -18,6 +18,7 @@ class Item(BaseModel):
     name: str
     description: str = Field(..., description="描述信息")
 
+
 # http://127.0.0.1:8000/docs
 # app = FastAPI()
 
@@ -28,27 +29,42 @@ app = FastAPI(title="My API", description="API 描述", summary="API 总结？",
 
 @app.get('/')
 def home():
+    """
+    curl -X GET http://127.0.0.1:8000/
+    """
     return 'hello world'
 
 
 # 定义路由的元数据
 @app.get('/users/{user_id}', summary="路由标题", description="路由描述说明")
 def get_test(user_id: int):
+    """
+    curl -X GET http://127.0.0.1:8000/users/123
+    """
     return {'user_id': user_id}
 
 
 @app.post('/users')
 def post_test():
+    """
+    curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "age": 25}' http://127.0.0.1:8000/users
+    """
     return 'Is a post request'
 
 
 @app.post('/submit')
 def post_form_test(city: str = Form(...)):
+    """
+    curl --location '127.0.0.1:8000/submit' --form 'city="shanghai"'
+    """
     return {'city': city}
 
 
 @app.post('/upload')
 def upload_file_test(file: UploadFile = File(...)):
+    """
+    curl --location '127.0.0.1:8000/upload' --header 'Content-Type: multipart/form-data' --form 'file=@"/Users/menghuawei/PycharmProjects/Learn-Python/web/fastapi01.py"'
+    """
     return {'name': file.filename}
 
 
@@ -56,14 +72,6 @@ if __name__ == '__main__':
     uvicorn.run(app)
 
     """
-    curl -X GET http://127.0.0.1:8000/
-    curl -X GET http://127.0.0.1:8000/users/123
-    curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "age": 25}' http://127.0.0.1:8000/users
-    curl --location '127.0.0.1:8000/submit' --form 'city="shanghai"'
-    curl --location '127.0.0.1:8000/upload' --header 'Content-Type: multipart/form-data' --form 'file=@"/Users/menghuawei/PycharmProjects/Learn-Python/web/fastapi01.py"'
-    """
-
-    """
-    启动服务：uvicorn fastapi01:app
-    生成文档：uvicorn fastapi01:app --reload，文档地址：http://127.0.0.1:8000/docs，http://127.0.0.1:8000/openapi.json
+    启动服务：uvicorn 01_fastapi_example:app
+    生成文档：uvicorn 01_fastapi_example:app --reload，文档地址：http://127.0.0.1:8000/docs，http://127.0.0.1:8000/openapi.json
     """

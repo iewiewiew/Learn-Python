@@ -7,6 +7,8 @@
 @description  docx 文件操作
 """
 
+import random
+import time
 
 from docx import Document
 
@@ -32,6 +34,8 @@ def docx_ops(path):
     list_items = ['项目 A', '项目 B', '项目 C']
     for item in list_items:
         doc.add_paragraph(item, style='List Bullet 2')
+    doc.add_paragraph("{:05d}".format(random.Random().randrange(10000, 100000)))
+    doc.add_paragraph(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
 
     # 保存文档
     doc.save(path)

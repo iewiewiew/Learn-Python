@@ -40,7 +40,7 @@ class GitUtil:
         repo.head.reset(index=True, working_tree=True)
 
         for i in range(1, 5):
-            with open(repo.working_dir + '/README.md', 'w') as f:  # w / a
+            with open(repo.working_dir + '/README.md', 'a') as f:  # w / a
                 f.write('Hello Git ' + time + '\n')
             repo.index.add(['README.md'])
             repo.index.commit('第 ' + str(i) + ' 次 Hello Git ' + time)
@@ -52,8 +52,8 @@ class GitUtil:
     def git_create_branch(repo_url, target_path):
         """创建分支"""
         repo = git.Repo(target_path)
-        for i in range(1, 10):
-            new_branch = 'branch_' + str(i) + '_' + time
+        for i in range(1, 5):
+            new_branch = 'test_branch_' + str(i) + '_' + time
             repo.create_head(new_branch)
             # 切换到新分支
             repo.head.reference = new_branch
@@ -164,11 +164,12 @@ class GitUtil:
             git_cmd.execute(['git', 'lfs', 'install'])
         print('.gitattributes 已存在')
 
-        extensions = ['.docx']
+        # extensions = ['.bin', '.docx']
+        extensions = ['.bin']
         for extension in extensions:
             repo.git.execute(['git', 'lfs', 'track', '*' + extension])
 
-        for i in range(1, 5):
+        for i in range(1, 2):
             docx_ops(target_path + '/lfs00{}.docx'.format(i))
             repo.git.add('.')  # add 所有
             repo.index.add(['lfs00{}.docx'.format(i)])  # 单独 add 某个文件
@@ -184,12 +185,14 @@ class GitUtil:
         repo = git.Repo(target_path)
         # file_size = 1024 * 1024 * 100  # 文件大小为 100 MB
         # file_size = 1024 * 1024 * 1  # 文件大小为 1 MB
-        file_size = 1 * 1 * 1
+        file_size = 1024 * 1024 * 1
         if not os.path.isdir(target_path + '/testfile'):
             os.mkdir(target_path + '/testfile')
-        for i in range(1, 5):
+        if not os.path.isdir(os.path.join(target_path + '/testfile', 'testfile2')):
+            os.mkdir(os.path.join(target_path + '/testfile', 'testfile2'))
+        for i in range(1, 2):
             create_large_binary_file(target_path + '/testfile/large_file_{}.bin'.format(i), file_size)
-            # create_large_binary_file(target_path + '/large_file_{}.bin'.format(i), file_size)
+            create_large_binary_file(target_path + '/testfile/testfile2/large_file_{}.bin'.format(i), file_size)
             repo.git.add('.')  # add 所有
             repo.index.commit('Hello Git ' + time)
         repo.remote('origin').push(force=True)

@@ -9,8 +9,6 @@
 
 import redis
 
-import redis
-
 
 class RedisUtils:
     def __init__(self, host, port, db, password=None):

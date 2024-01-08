@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>时间转换工具</title>
+    <link rel="stylesheet" href="convert.style.csss">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>时间转换工具</h1>
+        <div class="input-container">
+            <label for="timestamp">时间戳：</label>
+            <input type="text" id="timestamp" v-model="timestamp" placeholder="输入时间戳">
+        </div>
+        <div class="input-container">
+            <label for="timestampType">时间戳类型：</label>
+            <select id="timestampType" v-model="timestampType">
+                <option value="seconds">秒级时间戳</option>
+                <option value="milliseconds">毫秒级时间戳</option>
+            </select>
+        </div>
+        <button @click="convertTime">转换</button>
+        <div class="result" v-if="convertedTime">
+            <p>转换结果：</p>
+            <p>{{ convertedTime }}</p>
+        </div>
+    </div>
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                timestamp: '',
+                timestampType: 'seconds',
+                convertedTime: ''
+            },
+            methods: {
+                convertTime() {
+                    axios.post('http://localhost:5000/convert', {
+                        timestamp: this.timestamp,
+                        timestamp_type: this.timestampType
+                    })
+                        .then(response => {
+                            this.convertedTime = response.data.result;
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+            }
+        });
+</script>
+</body>
+</html>

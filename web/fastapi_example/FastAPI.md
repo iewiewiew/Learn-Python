@@ -2,13 +2,14 @@
 
 <h1 align="center">FaseAPI</h1>
 
-> By：weimenghua
-> Date：2023.10.26
-> Description：
+> By：weimenghua  
+> Date：2023.10.26  
+> Description：  
 
 **参考资料**  
-[FastAPI 官网](https://fastapi.tiangolo.com/)
-[FastAPI 源码](https://github.com/tiangolo/fastapi)
+[FastAPI 官网](https://fastapi.tiangolo.com/)  
+[FastAPI 源码](https://github.com/tiangolo/fastapi)  
+[FastAPI 备忘清单](https://wangchujiang.com/reference/docs/fastapi.html)
 
 
 
