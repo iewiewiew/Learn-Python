@@ -4,7 +4,7 @@
 """
 @author       weimenghua
 @time         2023/10/26 16:52
-@description  FastAPI
+@description  FastAPI 例子
 """
 
 import time

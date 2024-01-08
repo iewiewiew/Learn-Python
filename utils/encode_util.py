@@ -45,7 +45,9 @@ def url_demo():
     from urllib.parse import quote, quote_plus, unquote, unquote_plus
 
     # URL 编码
-    url = "https://www.example.com/?name=John Doe"
+    # url = "https://www.example.com/?name=John Doe"
+
+    url = "需求001"
 
     encoded_url = quote(url)
     print("Encoded URL:", encoded_url)

@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def show_files():
-    directory = '/Users/menghuawei/PycharmProjects/Learn-Python/.tmp/tmp'  # 本地路径
+    directory = '/Users/menghuawei/PycharmProjects/Learn-Python/.gitee/tmp'  # 本地路径
     # directory = '/root/jmeter-test/result/'                               # 服务器路径
     # directory = '/home/git/gitee-pref-mirrors/result/'                    # 服务器路径
 
@@ -29,7 +29,7 @@ def show_files():
 
 @app.route('/download/<path:filepath>')
 def download_file(filepath):
-    directory = '/Users/menghuawei/PycharmProjects/Learn-Python/.tmp/tmp'   # 本地路径
+    directory = '/Users/menghuawei/PycharmProjects/Learn-Python/.gitee/tmp'   # 本地路径
     # directory = '/root/jmeter-test/result/'                               # 服务器路径
     # directory = '/home/git/gitee-pref-mirrors/result/'                    # 服务器路径
 

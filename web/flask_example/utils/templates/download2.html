@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件列表</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-left: 20px; /* 添加左边距 */
+        }
+
+        .file-list-title {
+            color: blue;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .file-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .file-item {
+            margin-bottom: 10px;
+        }
+
+        .file-link {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .file-link:hover {
+            text-decoration: underline;
+        }
+
+        .yellow-folder {
+            color: #FFD700;
+        }
+
+        .folder-name {
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="file-list-title">文件列表</h1>
+
+        <ul class="file-list">
+            {% if current_path %}
+                <li class="file-item"><a class="file-link" href="{{ url_for('index') }}"><i class="fa fa-home"></i> Home</a></li>
+                {% for part in current_path.split('/') %}
+                    {% if part %}
+                        <li class="file-item">
+                            <a class="file-link" href="{{ url_for('show_directory', dir_path=current_path.split('/')[:loop.index] | join('/') ) }}"><i class="fa fa-folder yellow-folder"></i> <span class="folder-name">{{ part }}</span></a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% for item in contents %}
+                <li class="file-item">
+                    {% if item.type == 'file' %}
+                        <a class="file-link" href="{{ url_for('download', file_path=current_path + '/' + item.path) }}" download><i class="fa fa-file"></i> {{ item.name }}</a>
+                    {% elif item.type == 'directory' %}
+                        <a class="file-link" href="{{ url_for('show_directory', dir_path=current_path + '/' + item.path) }}"><i class="fa fa-folder yellow-folder"></i> <span class="folder-name">{{ item.name }}/</span></a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

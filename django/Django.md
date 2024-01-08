@@ -1,10 +1,10 @@
 [TOC]
 
-<h1 align="">Django Web 应用程序框架</h1>
+<h1 align="">Django</h1>
 
-> By：weimenghua
-> Date：2022.07.10
-> Description：
+> By：weimenghua  
+> Date：2022.07.10  
+> Description：Django Web 应用程序框架
 
 
 

@@ -40,7 +40,7 @@ class GitUtil:
         repo.head.reset(index=True, working_tree=True)
 
         for i in range(1, 5):
-            with open(repo.working_dir + '/README.md', 'w') as f:  # w / a
+            with open(repo.working_dir + '/README.md', 'a') as f:  # w / a
                 f.write('Hello Git ' + time + '\n')
             repo.index.add(['README.md'])
             repo.index.commit('第 ' + str(i) + ' 次 Hello Git ' + time)
@@ -52,8 +52,8 @@ class GitUtil:
     def git_create_branch(repo_url, target_path):
         """创建分支"""
         repo = git.Repo(target_path)
-        for i in range(1, 10):
-            new_branch = 'branch_' + str(i) + '_' + time
+        for i in range(1, 5):
+            new_branch = 'test_branch_' + str(i) + '_' + time
             repo.create_head(new_branch)
             # 切换到新分支
             repo.head.reference = new_branch
@@ -135,7 +135,7 @@ class GitUtil:
         repo.remote('origin').push(':refs/tags/' + remote_tag, force=True)
         assert ':refs/tags/' + remote_tag not in [tag.name for tag in repo.remote().refs]
         # @todo: 删除
-        GitUtil.git_ls_remote(repo_url=repo_url, target_path=target_path)
+        GitUtil.git_ls_remote(repo_url, target_path)
 
     @staticmethod
     def delete_all_remote_tags(repo_url, target_path):
@@ -164,7 +164,8 @@ class GitUtil:
             git_cmd.execute(['git', 'lfs', 'install'])
         print('.gitattributes 已存在')
 
-        extensions = ['.docx']
+        extensions = ['.bin', '.docx']
+        # extensions = ['.bin']
         for extension in extensions:
             repo.git.execute(['git', 'lfs', 'track', '*' + extension])
 
@@ -184,12 +185,14 @@ class GitUtil:
         repo = git.Repo(target_path)
         # file_size = 1024 * 1024 * 100  # 文件大小为 100 MB
         # file_size = 1024 * 1024 * 1  # 文件大小为 1 MB
-        file_size = 1 * 1 * 1
+        file_size = 1024 * 1024 * 1
         if not os.path.isdir(target_path + '/testfile'):
             os.mkdir(target_path + '/testfile')
+        if not os.path.isdir(os.path.join(target_path + '/testfile', 'testfile2')):
+            os.mkdir(os.path.join(target_path + '/testfile', 'testfile2'))
         for i in range(1, 5):
             create_large_binary_file(target_path + '/testfile/large_file_{}.bin'.format(i), file_size)
-            # create_large_binary_file(target_path + '/large_file_{}.bin'.format(i), file_size)
+            create_large_binary_file(target_path + '/testfile/testfile2/large_file_{}.bin'.format(i), file_size)
             repo.git.add('.')  # add 所有
             repo.index.commit('Hello Git ' + time)
         repo.remote('origin').push(force=True)
@@ -239,28 +242,28 @@ if __name__ == '__main__':
     # target_path = '/Users/menghuawei/PycharmProjects/Learn-Python/.tmp/gitee/repo/wei-demo-001'
 
     """克隆仓库"""
-    # GitUtil.git_clone(repo_url=repo_url, target_path=target_path)
+    # GitUtil.git_clone(repo_url, target_path)
     """推送代码"""
-    # GitUtil.git_push(repo_url=repo_url, target_path=target_path)
+    # GitUtil.git_push(repo_url, target_path)
     """推送新分支"""
-    # GitUtil.git_create_branch(repo_url=repo_url, target_path=target_path)
+    # GitUtil.git_create_branch(repo_url, target_path)
     """查看分支"""
-    # GitUtil.show_branch(repo_url=repo_url, target_path=target_path)
+    # GitUtil.show_branch(repo_url, target_path)
     """删除分支"""
-    # GitUtil.delete_branch(repo_url=repo_url, target_path=target_path)
+    # GitUtil.delete_branch(repo_url, target_path)
     """创建标签"""
-    # GitUtil.git_create_tag(repo_url=repo_url, target_path=target_path)
+    # GitUtil.git_create_tag(repo_url, target_path)
     """查看标签"""
-    # GitUtil.show_tag(repo_url=repo_url, target_path=target_path
+    # GitUtil.show_tag(repo_url, target_path
     """删除所有标签"""
-    # GitUtil.delete_all_remote_tags(repo_url=repo_url, target_path=target_path)
+    # GitUtil.delete_all_remote_tags(repo_url, target_path)
     """删除标签"""
-    # GitUtil.delete_tag(repo_url=repo_url, target_path=target_path)
+    # GitUtil.delete_tag(repo_url, target_path)
     """推送 LFS 文件"""
-    # GitUtil.git_lfs(repo_url=repo_url, target_path=target_path)
+    # GitUtil.git_lfs(repo_url, target_path)
     """创建代码评审"""
-    # GitUtil.create_pr_file(repo_url=repo_url, target_path=target_path)
+    # GitUtil.create_pr_file(repo_url, target_path)
     """推送大文件"""
-    # GitUtil.push_big_file(repo_url=repo_url, target_path=target_path)
+    # GitUtil.push_big_file(repo_url, target_path)
     """git ls-remote"""
-    # GitUtil.git_ls_remote(repo_url=repo_url, target_path=target_path)
+    # GitUtil.git_ls_remote(repo_url, target_path)

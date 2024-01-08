@@ -32,7 +32,13 @@ def demo3():
     dataset = load_dataset("PKU-Alignment/PKU-SafeRLHF")
 
 
+def demo4():
+    from diffusers import DiffusionPipeline
+    pipeline = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2")
+
+
 if __name__ == '__main__':
-    demo1()
-    demo2()
-    demo3()
+    # demo1()
+    # demo2()
+    # demo3()
+    demo4()

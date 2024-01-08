@@ -12,6 +12,7 @@
 [Python-Core-50-Courses](https://github.com/jackfrued/Python-Core-50-Courses)  
 [Python-Interview-Bible](https://github.com/jackfrued/Python-Interview-Bible)  
 [awesome-python](https://github.com/vinta/awesome-python)  
+[Python Example](https://www.programcreek.com/python/)
 
 
 
@@ -93,6 +94,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 - 豆瓣(douban) http://pypi.douban.com/simple/ 
 - 清华大学 https://pypi.tuna.tsinghua.edu.cn/simple/ 
 - 中国科学技术大学 http://pypi.mirrors.ustc.edu.cn/simple/
+- pypi https://pypi.org/simple/  （Python 包索引: https://pypi.org）
 
 
 
@@ -161,10 +163,11 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 
-
 ## 三、Python 零散记录
 
 ### 命名规范
+
+[如何使用PEP8写出漂亮的Python代码](https://mp.weixin.qq.com/s/xU8fFQ6sKmd8CNozHG4ltg)
 
 1. 项目名称首字母大写+大写式驼峰，ProjectName  
 2. 模块名和包名全部小写+下划线驼峰 module_name，package_name  
@@ -172,6 +175,16 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 4. 全局变量、常量全部使用大写字母+下划线驼峰 GLOBAL_VAR_NAME，CONSTANT_NAME  
 5. 方法名，函数名，其余变量，参数，实例全部小写+下划线驼峰 method_name，function_name，instance_var_name, function_parameter_name, local_var_name  
 6. 处理计数器外，不使用单字母命名 
+
+| 类型 | 命名约定                                                     | 例子                                            |
+| ---- | ------------------------------------------------------------ | ----------------------------------------------- |
+| 函数 | 使用小写字母。用下划线分隔单词以提高可读性。                 | function, python_function                       |
+| 变量 | 使用小写字母、单词或词组。用下划线分隔单词以提高可读性。     | x, var, python_variable                         |
+| 类   | 每个单词的开头字母都大写，不要用下划线分隔单词，这种格式叫做驼峰式或帕斯卡式。 | Model, PythonClass                              |
+| 方法 | 使用小写字母。用下划线分隔单词以提高可读性。                 | class_method, method                            |
+| 常数 | 使用大写字母、单词或词组。用下划线分隔单词以提高可读性。     | CONSTANT, PYTHON_CONSTANT, PYTHON_LONG_CONSTANT |
+| 模块 | 使用短小、小写的单词或词组。用下划线分隔单词以提高可读性。   | module.py, python_module.py                     |
+| 包   | 使用短小、小写的单词或词组。不要用下划线分隔单词。           | package, pythonpackage                          |
 
 PEP 8（Python官方风格指南）倡导用不同的命名风格来命名 Python 中不同的标识符
 
@@ -225,3 +238,21 @@ Auto PY to EXE 是一个基于 Eel 和 PyInstaller 构建的简单工具，将 P
 pip install auto-py-to-exe
 auto-py-to-exe
 
+
+查看 Python 所在路径
+which python
+
+查看当前系统上可用的 Python 版本
+ls /usr/local/bin/python*
+
+创建一个指向所选 Python 版本的符号链接
+sudo ln -sf /usr/local/bin/python3.12 /usr/local/bin/python
+
+查看当前 Python 版本
+python --version
+
+将默认 Python 版本还原为系统默认设置
+sudo rm /usr/local/bin/python
+
+查看 /usr/local/bin/python 的依赖
+otool -L /usr/local/bin/python

@@ -195,10 +195,11 @@ def merge_report(base_path):
     file1 = base_path + 'result/{}-{}-{}镜像周报.xlsx'.format(datetime.now().year, datetime.now().month, datetime.now().day)
     workbook = load_workbook(file1)
 
-    file2 = base_path + 'result/gitee_mirrors_report_{}'.format(time.strftime("%Y%m%d", time.localtime())) + '.xlsx'
+    file2 = base_path + 'result/gitee_mirrors_report_{}.xlsx'.format(time.strftime("%Y%m%d", time.localtime()))
     df_to_insert = pd.read_excel(file2)
 
-    writer = pd.ExcelWriter(base_path + 'result/镜像周报_{}'.format(time.strftime("%Y%m%d", time.localtime())) + '.xlsx', engine='openpyxl')
+    output_path = base_path + 'result/{}-{}-{}镜像周报.xlsx'.format(datetime.now().strftime('%Y'), datetime.now().strftime('%m'), datetime.now().strftime('%d'))
+    writer = pd.ExcelWriter(output_path, engine='openpyxl')
     writer.book = workbook
 
     # 获取目标 Excel 文件中的默认第一个 sheet，修改 sheet 名称
@@ -208,16 +209,20 @@ def merge_report(base_path):
     # 创建一个新的 Sheet，将要插入的数据写入该 Sheet
     df_to_insert.to_excel(writer, sheet_name='镜像API压测报告', index=False)
 
+    # 调整sheet顺序
+    writer.book.move_sheet('镜像API压测报告', offset=-1)
+
     writer.save()
-    print("插入完成")
+    print("生成镜像周报: " + output_path)
 
 
 if __name__ == '__main__':
-    array = ["Conda", "Nuget", "Dart", "Golang", "Maven", "Npm", "Packagist", "Pypi", "RubyGems", "Rust", "SBT", "system", "file", 'email']
-    # array = ["Conda", "Nuget"]
+    array = ["http_clone_100m", "企业代码仓库列表", "企业工作项列表"]
+    # array = ["Conda", "Nuget", "Dart", "Golang", "Maven", "Npm", "Packagist", "Pypi", "RubyGems", "Rust", "SBT", "system", "file", 'email']
     # array = ["aa", "bb"]
 
-    base_path = '/Users/menghuawei/PycharmProjects/Learn-Python/.tmp/tmp/'  # 本地环境
+    base_path = '/Users/menghuawei/PycharmProjects/my-project/Learn-Python/.gitee/tmp/20240405220230/40load/'  # 本地环境
+    # base_path = '/Users/menghuawei/PycharmProjects/Learn-Python/.gitee/tmp/'  # 本地环境
     # base_path = '/root/gitee-pref-mirrors/'                        # 服务器
     # base_path = '/home/git/gitee-pref-mirrors/'                    # 服务器
 
@@ -234,6 +239,6 @@ if __name__ == '__main__':
     merge_excel_files(base_path, array)
 
     """合并两个报告"""
-    # command = f'python generate_mirrors_report.py --template result/镜像统计周报模板.xlsx'
-    # subprocess.call(command, shell=True)
-    # merge_report(base_path)
+    command = f'python generate_mirrors_report.py --template result/镜像统计周报模板.xlsx'
+    subprocess.call(command, shell=True)
+    merge_report(base_path)
